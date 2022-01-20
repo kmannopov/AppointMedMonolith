@@ -1,3 +1,6 @@
+using AppointMed.API.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddMvc();
+builder.Services.AddDbContext<AppointmedContext>(x => x.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=AppointMed;Integrated Security=True"));
 
 var app = builder.Build();
 

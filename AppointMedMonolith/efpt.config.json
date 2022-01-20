@@ -1,0 +1,74 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "AppointmedContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "Data",
+   "OutputPath": "Models",
+   "ProjectRootNamespace": "AppointMed.API",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 1,
+   "Tables": [
+      {
+         "Name": "[dbo].[address]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[appointment]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[appointment_status]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[clinic]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[clinic_department_junction]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[clinic_type]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[department]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[doctor]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[patient]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[phone_number]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "desktop-dnm2bs2\\sqlexpress.AppointMed.dbo",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}
