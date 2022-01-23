@@ -8,7 +8,7 @@ namespace AppointMed.Core.Entities.UserAggregate;
 
 public record Doctor : User
 {
-    public Clinic Clinic { get; init; }
-    public List<Appointment> Schedule { get; set; }
+    public Guid ClinicId { get; init; }
+    public Department Department { get; init; }
 
 }

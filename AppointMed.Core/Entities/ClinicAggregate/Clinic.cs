@@ -8,7 +8,7 @@ namespace AppointMed.Core.Entities;
 
 public record Clinic : BaseEntity
 {
-    public List<Department> Departments { get; init; }
+    public IEnumerable<Department> Departments { get; init; }
     public Address Address { get; init; }
     public Location Location { get; init; }
 
