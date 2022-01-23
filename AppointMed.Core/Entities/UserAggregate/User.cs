@@ -11,7 +11,11 @@ public record User : BaseEntity
     public string FirstName { get; init; }
     public string LastName { get; init; }
     public DateOnly DateOfBirth { get; init; }
-    public Gender Gender { get; init; }
-    public string PhoneNumber { get; init; }
-    public string Email { get; init; }
+    public UserGender Gender { get; init; }
+
+    public enum UserGender
+    {
+        Male,
+        Female
+    }
 }

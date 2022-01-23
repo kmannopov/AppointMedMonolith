@@ -9,4 +9,13 @@ public record Appointment : BaseEntity
     public Guid PatientId { get; init; }
     public AppointmentStatus Status { get; set; }
     public DateTime DateTime { get; init; }
+    public string Notes { get; init; }
+
+    public enum AppointmentStatus
+    {
+        Scheduled,
+        CheckedIn,
+        Complete,
+        Cancelled
+    }
 }
