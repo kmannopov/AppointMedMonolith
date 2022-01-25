@@ -5,9 +5,9 @@ namespace AppointMed.API;
 
 public static class Extensions
 {
-    public static DepartmentDto AsDto(this Department department)
+    public static DepartmentResponse AsDto(this Department department)
     {
-        return new DepartmentDto
+        return new DepartmentResponse
         {
             Id = department.Id,
             Name = department.Name,

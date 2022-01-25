@@ -9,33 +9,33 @@ namespace AppointMed.API.Controllers;
 [Route("[controller]")]
 public class DepartmentController : ControllerBase
 {
-    private readonly IDepartmentRepository _departmentRepository;
+    private readonly IDepartmentService _departmentRepository;
 
-    public DepartmentController (IDepartmentRepository repository)
+    public DepartmentController (IDepartmentService repository)
     {
         _departmentRepository = repository;
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<DepartmentDto>> GetDepartmentAsync(Guid id)
+    public async Task<ActionResult<DepartmentResponse>> GetDepartmentAsync(Guid id)
     {
-        var department = await _departmentRepository.GetDepartmentAsync(id);
+        var department = await _departmentRepository.GetDepartmentByIdAsync(id);
         if (department is null)
             return NotFound();
 
         return department.AsDto();
     }
 
-    [HttpPost]
-    public async Task<ActionResult<DepartmentDto>> CreateDepartmentAsync(CreateDepartmentDto createDepartmentDto)
-    {
-        Department department = new()
-        {
-            Id = Guid.NewGuid(),
-            Name = createDepartmentDto.Name,
-            CreatedDate = DateTimeOffset.UtcNow
-        };
-        await _departmentRepository.CreateDepartmentAsync(department);
-        return CreatedAtAction(nameof(GetDepartmentAsync), new { id = department.Id }, department.AsDto());
-    }
+    //[HttpPost]
+    //public async Task<ActionResult<DepartmentDto>> CreateDepartmentAsync(CreateDepartmentDto createDepartmentDto)
+    //{
+    //    Department department = new()
+    //    {
+    //        Id = Guid.NewGuid(),
+    //        Name = createDepartmentDto.Name,
+    //        CreatedDate = DateTimeOffset.UtcNow
+    //    };
+    //    await _departmentRepository.CreateDepartmentAsync(department);
+    //    return CreatedAtAction(nameof(GetDepartmentAsync), new { id = department.Id }, department.AsDto());
+    //}
 }

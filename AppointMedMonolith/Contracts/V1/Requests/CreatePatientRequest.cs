@@ -1,6 +1,6 @@
 ﻿namespace AppointMed.API.Dtos;
 
-public class CreatePatientDto
+public record CreatePatientRequest
 {
 
 }
