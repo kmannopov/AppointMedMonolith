@@ -15,6 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMvc();
 builder.Services.AddSingleton<IClinicRepository, ClinicRepository>();
+builder.Services.AddSingleton<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddSingleton<IMongoClient>(serviceProvider =>
 {
     var settings = builder.Configuration.GetSection(nameof(MongoDbSettings)).Get<MongoDbSettings>();

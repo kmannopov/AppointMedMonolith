@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace AppointMed.Core.Entities;
 
-public record Department
+public record Department : BaseEntity
 {
-    public int Id { get; set; }
     public string Name { get; set; }
 }
