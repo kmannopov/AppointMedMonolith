@@ -1,12 +1,14 @@
-﻿using AppointMed.API.Contracts;
+﻿using AppointMed.API.Contracts.V1;
 using AppointMed.API.Repositories;
-using AppointMed.Core.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppointMed.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class ClinicController : ControllerBase
 {
     private readonly IClinicService _clinicService;

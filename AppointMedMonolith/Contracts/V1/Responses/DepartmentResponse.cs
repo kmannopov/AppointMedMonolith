@@ -1,4 +1,4 @@
-﻿namespace AppointMed.API.Dtos;
+﻿namespace AppointMed.API.Contracts.V1.Responses;
 
 public record DepartmentResponse
 {

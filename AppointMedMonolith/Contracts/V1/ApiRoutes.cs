@@ -1,4 +1,4 @@
-﻿namespace AppointMed.API.Contracts;
+﻿namespace AppointMed.API.Contracts.V1;
 
 public static class ApiRoutes
 {
@@ -23,5 +23,10 @@ public static class ApiRoutes
         public const string Create = $"{Base}/appointments";
         public const string Update = $"{Base}/appointments/{{appointmentId}}";
         public const string Delete = $"{Base}/appointments/{{appointmentId}}";
+    }
+    public static class Identity
+    {
+        public const string Login = $"{Base}/identity/login";
+        public const string Register = $"{Base}/identity/register";
     }
 }
