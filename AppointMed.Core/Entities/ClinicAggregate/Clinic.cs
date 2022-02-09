@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AppointMed.Core.Entities.AddressAggregate;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
@@ -7,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace AppointMed.Core.Entities;
+namespace AppointMed.Core.Entities.ClinicAggregate;
 
 public record Clinic : BaseEntity
 {
@@ -15,5 +16,4 @@ public record Clinic : BaseEntity
     public IEnumerable<Department> Departments { get; init; }
     public Address Address { get; init; }
     public Location Location { get; init; }
-
 }

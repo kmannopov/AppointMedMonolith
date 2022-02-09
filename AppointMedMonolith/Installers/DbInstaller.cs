@@ -1,5 +1,6 @@
-﻿using AppointMed.API.Data;
-using AppointMed.API.Repositories;
+﻿using AppointMed.Core.Interfaces;
+using AppointMed.Infrastructure.Data;
+using AppointMed.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,5 +18,6 @@ public class DbInstaller : IInstaller
 
         services.AddScoped<IClinicService, ClinicService>();
         services.AddScoped<IDepartmentService, DepartmentService>();
+        services.AddScoped<IPatientService, PatientService>();
     }
 }

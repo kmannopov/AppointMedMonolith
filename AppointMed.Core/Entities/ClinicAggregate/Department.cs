@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AppointMed.Core.Entities;
+namespace AppointMed.Core.Entities.ClinicAggregate;
 
 public record Department : BaseEntity
 {

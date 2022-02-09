@@ -1,6 +1,6 @@
-﻿using AppointMed.Core.Entities;
+﻿using AppointMed.Core.Entities.ClinicAggregate;
 
-namespace AppointMed.API.Repositories;
+namespace AppointMed.Core.Interfaces;
 
 public interface IDepartmentService
 {

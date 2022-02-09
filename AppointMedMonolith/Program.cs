@@ -1,6 +1,5 @@
 using AppointMed.API.Installers;
-using AppointMed.API.Repositories;
-using AppointMed.API.Settings;
+using AppointMed.Infrastructure.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 

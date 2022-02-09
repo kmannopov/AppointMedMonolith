@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AppointMed.Core.Entities.AddressAggregate;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

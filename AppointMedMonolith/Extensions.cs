@@ -1,7 +1,4 @@
-﻿using AppointMed.API.Dtos;
-using AppointMed.Core.Entities;
-
-namespace AppointMed.API;
+﻿namespace AppointMed.API;
 
 public static class Extensions
 {

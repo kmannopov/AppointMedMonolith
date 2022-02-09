@@ -8,12 +8,18 @@ public static class ApiRoutes
 
     public static class Clinics
     {
-
         public const string GetAll = $"{Base}/clinics";
         public const string Get = $"{Base}/clinics/{{clinicId}}";
         public const string Create = $"{Base}/clinics";
         public const string Update = $"{Base}/clinics/{{clinicId}}";
         public const string Delete = $"{Base}/clinics/{{clinicId}}";
+    }
+
+    public static class Patients
+    {
+        public const string Get = $"{Base}/patients/{{patientId}}";
+        public const string Create = $"{Base}/patients";
+        public const string Update = $"{Base}/patients/{{patientId}}";
     }
 
     public static class Appointments
@@ -28,5 +34,6 @@ public static class ApiRoutes
     {
         public const string Login = $"{Base}/identity/login";
         public const string Register = $"{Base}/identity/register";
+        public const string Refresh = $"{Base}/identity/refresh";
     }
 }

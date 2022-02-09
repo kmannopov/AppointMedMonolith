@@ -1,5 +1,5 @@
 ﻿using AppointMed.API.Contracts.V1;
-using AppointMed.API.Repositories;
+using AppointMed.Core.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

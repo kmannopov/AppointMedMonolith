@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AppointMed.Core.Entities;
+namespace AppointMed.Core.Entities.AddressAggregate;
 
 public record Address : BaseEntity
 {

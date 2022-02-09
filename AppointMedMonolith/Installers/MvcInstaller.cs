@@ -1,5 +1,5 @@
-﻿using AppointMed.API.Services.Auth;
-using AppointMed.API.Settings;
+﻿using AppointMed.Infrastructure.Services.Auth;
+using AppointMed.Infrastructure.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
