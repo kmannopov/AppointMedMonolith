@@ -1,6 +1,6 @@
-﻿namespace AppointMed.API.Contracts.V1.Requests;
+﻿namespace AppointMed.Core.Dtos;
 
-public record CreateAddressRequest
+public record CreateAddressDto
 {
     public string Region { get; init; }
     public string City { get; init; }

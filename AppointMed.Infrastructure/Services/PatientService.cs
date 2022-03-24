@@ -15,7 +15,7 @@ public class PatientService : IPatientService
     }
     public async Task<Patient> GetPatientByIdAsync(Guid id)
     {
-        return await _dataContext.Patients.SingleOrDefaultAsync(patient => patient.Id == id);
+        return await _dataContext.Patients.SingleOrDefaultAsync(patient => patient.UserId == id.ToString());
     }
 
     public async Task<bool> CreatePatientAsync(Patient patient)
@@ -32,5 +32,14 @@ public class PatientService : IPatientService
         var updated = await _dataContext.SaveChangesAsync();
 
         return updated > 0;
+    }
+
+    public async Task<bool> UserIsPatientAsync(string userId)
+    {
+        var patient = await _dataContext.Patients.AsNoTracking().SingleOrDefaultAsync(x => x.UserId == userId);
+
+        if (patient == null)
+            return false;
+        return true;
     }
 }

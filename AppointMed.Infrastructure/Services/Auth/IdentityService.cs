@@ -91,6 +91,7 @@ public class IdentityService : IIdentityService
             Expires = DateTime.UtcNow.Add(_jwtSettings.TokenLifetime),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
+
         var token = tokenHandler.CreateToken(tokenDescriptor);
 
         var refreshToken = new RefreshToken
@@ -117,7 +118,7 @@ public class IdentityService : IIdentityService
         var validatedToken = GetPrincipalFromToken(token);
 
         if (validatedToken is null)
-            return new AuthenticationResult { Errors = new[] { "Invalid token" } };
+            return new AuthenticationResult { Errors = new[] { "Invalid token." } };
 
         var expiryDateUnix = long.Parse(validatedToken.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Exp).Value);
 
@@ -125,26 +126,26 @@ public class IdentityService : IIdentityService
             .AddSeconds(expiryDateUnix);
 
         if (expiryDateTimeUtc > DateTime.UtcNow)
-            return new AuthenticationResult { Errors = new[] { "This token hasn't expired yet" } };
+            return new AuthenticationResult { Errors = new[] { $"This token hasn't expired yet." } };
 
         var jti = validatedToken.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
 
         var storedRefreshToken = await _dataContext.RefreshTokens.SingleOrDefaultAsync(x => x.Token == refreshToken);
 
         if (storedRefreshToken is null)
-            return new AuthenticationResult { Errors = new[] { "This refresh token does not exist" } };
+            return new AuthenticationResult { Errors = new[] { "This refresh token does not exist." } };
 
         if (DateTime.UtcNow > storedRefreshToken.ExpiryDate)
-            return new AuthenticationResult { Errors = new[] { "This refresh token has expired" } };
+            return new AuthenticationResult { Errors = new[] { "This refresh token has expired." } };
 
         if (storedRefreshToken.Invalidated)
-            return new AuthenticationResult { Errors = new[] { "This refresh token has been invalidated" } };
+            return new AuthenticationResult { Errors = new[] { "This refresh token has been invalidated." } };
 
         if (storedRefreshToken.Used)
-            return new AuthenticationResult { Errors = new[] { "This refresh token has been used" } };
+            return new AuthenticationResult { Errors = new[] { "This refresh token has been used." } };
 
         if (storedRefreshToken.JwtId != jti)
-            return new AuthenticationResult { Errors = new[] { "This refresh token does not match JWT" } };
+            return new AuthenticationResult { Errors = new[] { "This refresh token does not match the JWT." } };
 
         storedRefreshToken.Used = true;
         _dataContext.RefreshTokens.Update(storedRefreshToken);
@@ -171,7 +172,7 @@ public class IdentityService : IIdentityService
         }
     }
 
-    private bool IsJwtWithValidSecurityAlgorithm(SecurityToken validatedToken)
+    private static bool IsJwtWithValidSecurityAlgorithm(SecurityToken validatedToken)
     {
         return validatedToken is JwtSecurityToken jwtSecurityToken &&
             jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,

@@ -1,4 +1,5 @@
 ﻿using AppointMed.API.Contracts.V1;
+using AppointMed.Core.Entities.ClinicAggregate;
 using AppointMed.Core.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -34,4 +35,15 @@ public class ClinicController : ControllerBase
 
         return Ok(clinic);
     }
+
+    //[HttpGet(ApiRoutes.Clinics.Create)]
+    //public async Task<IActionResult> Create([FromRoute] CreateClinicRequest request)
+    //{
+    //    var clinic = await _clinicService.CreateClinicAsync(request);
+
+    //    if (clinic is null)
+    //        return NotFound();
+
+    //    return Ok(clinic);
+    //}
 }

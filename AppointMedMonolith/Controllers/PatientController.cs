@@ -1,8 +1,9 @@
 ﻿using AppointMed.API.Contracts.V1;
-using AppointMed.API.Contracts.V1.Requests;
 using AppointMed.API.Contracts.V1.Responses;
+using AppointMed.Core.Dtos;
 using AppointMed.Core.Entities.UserAggregate;
 using AppointMed.Core.Interfaces;
+using AppointMed.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -34,11 +35,11 @@ public class PatientController : ControllerBase
     }
     
     [HttpPost(ApiRoutes.Patients.Create)]
-    public async Task<IActionResult> Create([FromBody] CreatePatientRequest request)
+    public async Task<IActionResult> Create([FromBody] CreatePatientDto request)
     {
         var patient = new Patient()
         {
-            Id = Guid.NewGuid(),
+            UserId = HttpContext.GetUserId(),
             FirstName = request.FirstName,
             LastName = request.LastName,
             DateOfBirth = request.DateOfBirth,
@@ -54,14 +55,13 @@ public class PatientController : ControllerBase
             },
             PhoneNumber = request.PhoneNumber,
             Email = request.Email,
-            CreatedDate = DateTimeOffset.UtcNow
+            DateRegistered = DateTimeOffset.UtcNow
         };
-        // var patient = await _patientService.CreatePatientAsync(request.FirstName, request.LastName, request.Email, request.PhoneNumber);
 
         await _patientService.CreatePatientAsync(patient);
 
         var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
-        var locationUri = baseUrl + "/" + ApiRoutes.Patients.Get.Replace("{patientId}", patient.Id.ToString());
+        var locationUri = baseUrl + "/" + ApiRoutes.Patients.Get.Replace("{patientId}", patient.UserId.ToString());
         
         var response = new PatientResponse
         {
@@ -74,7 +74,44 @@ public class PatientController : ControllerBase
             Email = patient.Email
         };
 
-        return Created(locationUri, patient);
+        return Created(locationUri, response);
     }
-    
+
+    [HttpPut(ApiRoutes.Patients.Update)]
+    public async Task<IActionResult> Update([FromRoute] Guid patientId, [FromBody] UpdatePatientDto request)
+    {
+        var patient = await _patientService.GetPatientByIdAsync(patientId);
+
+        var userIsPatient = await _patientService.UserIsPatientAsync(HttpContext.GetUserId());
+
+        patient.FirstName = request.FirstName;
+        patient.LastName = request.LastName;
+        patient.DateOfBirth = request.DateOfBirth;
+        patient.Gender = request.Gender;
+        patient.Address.Region = request.Address.Region;
+        patient.Address.City = request.Address.City;
+        patient.Address.District = request.Address.District;
+        patient.Address.Street = request.Address.Street;
+        patient.PhoneNumber = request.PhoneNumber;
+        patient.Email = request.Email;
+
+        var response = new PatientResponse
+        {
+            FirstName = patient.FirstName,
+            LastName = patient.LastName,
+            DateOfBirth = patient.DateOfBirth,
+            Gender = patient.Gender,
+            Address = patient.Address,
+            PhoneNumber = patient.PhoneNumber,
+            Email = patient.Email
+        };
+
+        var updated = await _patientService.UpdatePatientAsync(patient);
+
+        if (updated)
+            return Ok(response);
+
+        return NotFound();
+    }
+
 }

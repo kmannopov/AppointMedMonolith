@@ -1,21 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppointMed.Core.Entities.UserAggregate;
 
-public record User : BaseEntity
+public record User
 {
-    public string FirstName { get; init; }
-    public string LastName { get; init; }
-    public DateTime DateOfBirth { get; init; }
-    public UserGender Gender { get; init; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public DateTime DateOfBirth { get; set; }
+    public UserGender Gender { get; set; }
+    [ForeignKey(nameof(IdentityUser))]
+    public string UserId { get; set; }
+    public IdentityUser IdentityUser { get; set; }
+    public DateTimeOffset DateRegistered { get; set; }
 
     public enum UserGender
     {
-        Male,
-        Female
+        Female,
+        Male
     }
 }
