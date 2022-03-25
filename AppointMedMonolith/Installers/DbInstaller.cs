@@ -8,10 +8,10 @@ namespace AppointMed.API.Installers;
 
 public class DbInstaller : IInstaller
 {
-    public void InstallServices(IServiceCollection services, IConfiguration configuration)
+    public async void InstallServices(IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<DataContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), x => x.UseNetTopologySuite()));
 
         services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddEntityFrameworkStores<DataContext>();

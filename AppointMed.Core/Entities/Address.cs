@@ -1,4 +1,4 @@
-﻿using System.Data.Entity.Spatial;
+﻿using NetTopologySuite.Geometries;
 
 namespace AppointMed.Core.Entities.AddressAggregate;
 
@@ -8,5 +8,5 @@ public record Address : BaseEntity
     public string City { get; set; }
     public string District { get; set; }
     public string Street { get; set; }
-    public DbGeography Location { get; set; }
+    public Point Location { get; set; }
 }

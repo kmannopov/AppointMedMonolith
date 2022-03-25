@@ -11,7 +11,7 @@ namespace AppointMed.Core.Entities.UserAggregate;
 public record Patient : User
 {
     [ForeignKey(nameof(Address))]
-    public string AddressId { get; set; }
+    public Guid AddressId { get; set; }
     public Address Address { get; set; }
     public string PhoneNumber { get; set; }
     public string Email { get; set; }

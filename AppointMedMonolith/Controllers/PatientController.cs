@@ -84,6 +84,9 @@ public class PatientController : ControllerBase
 
         var userIsPatient = await _patientService.UserIsPatientAsync(HttpContext.GetUserId());
 
+        if (!userIsPatient)
+            return BadRequest(new { error = "You are not the owner of this patient profile" });
+
         patient.FirstName = request.FirstName;
         patient.LastName = request.LastName;
         patient.DateOfBirth = request.DateOfBirth;
