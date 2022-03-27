@@ -15,12 +15,12 @@ public class ClinicService : IClinicService
     }
     public async Task<IEnumerable<Clinic>> GetClinicsAsync()
     {
-        return await _dataContext.Clinics.ToListAsync();
+        return await _dataContext.Clinics.Include(x => x.Departments).Include(x => x.Address).ToListAsync();
     }
 
     public async Task<Clinic> GetClinicByIdAsync(Guid clinicId)
     {
-        return await _dataContext.Clinics.SingleOrDefaultAsync(x => x.Id == clinicId);
+        return await _dataContext.Clinics.Include(x => x.Address).Include(x => x.Departments).SingleOrDefaultAsync(x => x.Id == clinicId);
     }
 
     public async Task<bool> CreateClinicAsync(Clinic clinic)

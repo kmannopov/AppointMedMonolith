@@ -1,6 +1,6 @@
-﻿using AppointMed.Infrastructure.Entities.AuthAggregate;
+﻿using AppointMed.Core.Entities.AuthAggregate;
 
-namespace AppointMed.Infrastructure.Services.Auth;
+namespace AppointMed.Core.Interfaces;
 
 public interface IIdentityService
 {

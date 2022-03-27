@@ -1,5 +1,6 @@
-﻿using AppointMed.Infrastructure.Data;
-using AppointMed.Infrastructure.Entities.AuthAggregate;
+﻿using AppointMed.Core.Entities.AuthAggregate;
+using AppointMed.Core.Interfaces;
+using AppointMed.Infrastructure.Data;
 using AppointMed.Infrastructure.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -109,7 +110,8 @@ public class IdentityService : IIdentityService
         {
             Success = true,
             Token = tokenHandler.WriteToken(token),
-            RefreshToken = refreshToken.Token
+            RefreshToken = refreshToken.Token,
+            UserId = user.Id
         };
     }
 

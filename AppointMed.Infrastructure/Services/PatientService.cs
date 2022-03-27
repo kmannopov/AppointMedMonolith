@@ -13,9 +13,10 @@ public class PatientService : IPatientService
     {
         _dataContext = dataContext;
     }
-    public async Task<Patient> GetPatientByIdAsync(Guid id)
+    public async Task<Patient> GetPatientByIdAsync(string id)
     {
-        return await _dataContext.Patients.SingleOrDefaultAsync(patient => patient.UserId == id.ToString());
+        var patient = await _dataContext.Patients.Include(patient => patient.Address).SingleOrDefaultAsync(patient => patient.UserId == id);
+        return patient;
     }
 
     public async Task<bool> CreatePatientAsync(Patient patient)

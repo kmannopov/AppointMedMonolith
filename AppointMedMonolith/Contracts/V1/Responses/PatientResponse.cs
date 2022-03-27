@@ -1,4 +1,4 @@
-﻿using AppointMed.Core.Entities.AddressAggregate;
+﻿using AppointMed.Core.Entities;
 using AppointMed.Core.Entities.UserAggregate;
 
 namespace AppointMed.API.Contracts.V1.Responses;

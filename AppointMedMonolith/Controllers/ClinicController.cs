@@ -1,4 +1,6 @@
 ﻿using AppointMed.API.Contracts.V1;
+using AppointMed.API.Extensions;
+using AppointMed.Core.Dtos;
 using AppointMed.Core.Entities.ClinicAggregate;
 using AppointMed.Core.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -36,14 +38,42 @@ public class ClinicController : ControllerBase
         return Ok(clinic);
     }
 
-    //[HttpGet(ApiRoutes.Clinics.Create)]
-    //public async Task<IActionResult> Create([FromRoute] CreateClinicRequest request)
-    //{
-    //    var clinic = await _clinicService.CreateClinicAsync(request);
+    [HttpPost(ApiRoutes.Clinics.Create)]
+    public async Task<IActionResult> Create([FromBody] ClinicDto request)
+    {
+        var clinic = new Clinic
+        {
+            Id = Guid.NewGuid(),
+            CreatedDate = DateTimeOffset.UtcNow,
+            Address = request.Address.MapToNewAddress(),
+            Name = request.Name,
+            Departments = request.Departments.MapToDepartmentList()
+        };
 
-    //    if (clinic is null)
-    //        return NotFound();
+        await _clinicService.CreateClinicAsync(clinic);
 
-    //    return Ok(clinic);
-    //}
+        var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
+        var locationUri = baseUrl + "/" + ApiRoutes.Clinics.Get.Replace("{patientId}", clinic.Id.ToString());
+
+        return Created(locationUri, clinic);
+    }
+
+    [HttpPut(ApiRoutes.Clinics.Update)]
+    public async Task<IActionResult> Update([FromRoute] Guid clinicId, [FromBody] ClinicDto request)
+    {
+        //TODO Check if this Method can be used to easily validate requests
+        //if (!ModelState.IsValid)
+        var clinic = await _clinicService.GetClinicByIdAsync(clinicId);
+
+        clinic.Name = request.Name;
+        clinic.Address = request.Address.MapToNewAddress();
+        clinic.Departments = request.Departments.MapToDepartmentList();
+
+        var updated = await _clinicService.UpdateClinicAsync(clinic);
+
+        if (updated)
+            return Ok(clinic);
+
+        return NotFound();
+    }
 }

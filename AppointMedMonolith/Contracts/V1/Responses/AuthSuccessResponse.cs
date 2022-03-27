@@ -2,6 +2,7 @@
 
 public class AuthSuccessResponse
 {
-    public string Token { get; set; }
-    public string RefreshToken { get; set; }
+    public string Token { get; init; }
+    public string RefreshToken { get; init; }
+    public string UserId { get; init; }
 }

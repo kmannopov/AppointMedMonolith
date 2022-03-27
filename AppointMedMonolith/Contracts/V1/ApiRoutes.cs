@@ -19,7 +19,7 @@ public static class ApiRoutes
     {
         public const string Get = $"{Base}/patients/{{patientId}}";
         public const string Create = $"{Base}/patients";
-        public const string Update = $"{Base}/patients/{{patientId}}";
+        public const string Update = $"{Base}/patients";
     }
 
     public static class Appointments

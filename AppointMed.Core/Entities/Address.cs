@@ -1,6 +1,6 @@
 ﻿using NetTopologySuite.Geometries;
 
-namespace AppointMed.Core.Entities.AddressAggregate;
+namespace AppointMed.Core.Entities;
 
 public record Address : BaseEntity
 {

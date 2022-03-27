@@ -1,8 +1,8 @@
-﻿using AppointMed.Core.Entities.AddressAggregate;
+﻿using AppointMed.Core.Entities;
 using AppointMed.Core.Entities.AppointmentAggregate;
+using AppointMed.Core.Entities.AuthAggregate;
 using AppointMed.Core.Entities.ClinicAggregate;
 using AppointMed.Core.Entities.UserAggregate;
-using AppointMed.Infrastructure.Entities.AuthAggregate;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
