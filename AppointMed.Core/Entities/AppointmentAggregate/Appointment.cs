@@ -1,6 +1,4 @@
-﻿using AppointMed.Core.Entities.UserAggregate;
-
-namespace AppointMed.Core.Entities.AppointmentAggregate;
+﻿namespace AppointMed.Core.Entities.AppointmentAggregate;
 
 public record Appointment : BaseEntity
 {

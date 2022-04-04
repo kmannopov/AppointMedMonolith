@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AppointMed.Infrastructure.Services.Auth;
+﻿namespace AppointMed.Infrastructure.Services.Auth;
 
 public static class UserRoles
 {
