@@ -21,15 +21,14 @@ namespace AppointMed.Infrastructure.Services
             return created > 0;
         }
 
-        public async Task<IEnumerable<Doctor>> GetAllDoctorsInClinicAsync(string clinicId, string departmentId)
+        public async Task<IEnumerable<Doctor>> GetAllDoctorsByDeptInClinicAsync(Guid clinicId, Guid departmentId)
         {
-
+           return await _dataContext.Doctors.Where(x => x.ClinicId == clinicId && x.DepartmentId == departmentId).ToListAsync();
         }
 
-        public async Task<Doctor> GetDoctorByIdAsync(string id)
+        public async Task<Doctor> GetDoctorByIdAsync(Guid id)
         {
-            var doctor = await _dataContext.Doctors.SingleOrDefaultAsync(doctor => doctor.UserId == id);
-            return doctor;
+            return await _dataContext.Doctors.FindAsync(id);
         }
 
         public async Task<bool> UpdateDoctorAsync(Doctor doctor)
@@ -40,13 +39,11 @@ namespace AppointMed.Infrastructure.Services
             return updated > 0;
         }
 
-        public async Task<bool> UserIsDoctorAsync(string userId)
+        public async Task<bool> UserIsDoctorAsync(Guid userId)
         {
-            var doctor = await _dataContext.Patients.AsNoTracking().SingleOrDefaultAsync(x => x.UserId == userId);
+            var doctor = await _dataContext.Doctors.AsNoTracking().SingleOrDefaultAsync(x => x.UserId == userId);
 
-            if (doctor == null)
-                return false;
-            return true;
+            return doctor != null;
         }
     }
 }

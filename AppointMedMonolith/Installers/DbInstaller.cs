@@ -8,7 +8,7 @@ namespace AppointMed.API.Installers;
 
 public class DbInstaller : IInstaller
 {
-    public async void InstallServices(IServiceCollection services, IConfiguration configuration)
+    public void InstallServices(IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<DataContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), x => x.UseNetTopologySuite()));
@@ -17,7 +17,8 @@ public class DbInstaller : IInstaller
             .AddEntityFrameworkStores<DataContext>();
 
         services.AddScoped<IClinicService, ClinicService>();
-        services.AddScoped<IDepartmentService, DepartmentService>();
         services.AddScoped<IPatientService, PatientService>();
+        services.AddScoped<IDoctorService, DoctorService>();
+        services.AddScoped<IAppointmentService, AppointmentService>();
     }
 }

@@ -11,7 +11,7 @@ public record User
     public DateTime DateOfBirth { get; set; }
     public UserGender Gender { get; set; }
     [Key]
-    public string UserId { get; set; }
+    public Guid UserId { get; set; }
     [ForeignKey(nameof(UserId))]
     public IdentityUser IdentityUser { get; set; }
     public DateTimeOffset DateRegistered { get; set; }

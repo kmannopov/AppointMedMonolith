@@ -25,7 +25,7 @@ public class PatientController : ControllerBase
 
 
     [HttpGet(ApiRoutes.Patients.Get)]
-    public async Task<IActionResult> Get([FromRoute] string patientId)
+    public async Task<IActionResult> Get([FromRoute] Guid patientId)
     {
         var patient = await _patientService.GetPatientByIdAsync(patientId);
 

@@ -51,4 +51,9 @@ public class ClinicService : IClinicService
 
         return deleted > 0;
     }
+
+    public async Task<IEnumerable<Clinic>> GetClinicsByDepartmentAsync(string departmentName)
+    {
+        return await _dataContext.Clinics.Include(x => x.Departments).Include(x => x.Address).Where(x => x.Departments.Any(x => x.Name == departmentName)).ToListAsync();
+    }
 }

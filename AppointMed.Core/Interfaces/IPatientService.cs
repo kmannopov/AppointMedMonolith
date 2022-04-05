@@ -4,8 +4,8 @@ namespace AppointMed.Core.Interfaces;
 
 public interface IPatientService
 {
-    Task<Patient> GetPatientByIdAsync(string id);
+    Task<Patient> GetPatientByIdAsync(Guid userId);
     Task<bool> CreatePatientAsync(Patient patient);
     Task<bool> UpdatePatientAsync(Patient patient);
-    Task<bool> UserIsPatientAsync(string UserId);
+    Task<bool> UserIsPatientAsync(Guid UserId);
 }

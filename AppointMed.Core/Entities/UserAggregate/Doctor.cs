@@ -1,6 +1,4 @@
-﻿using AppointMed.Core.Entities.ClinicAggregate;
-
-namespace AppointMed.Core.Entities.UserAggregate;
+﻿namespace AppointMed.Core.Entities.UserAggregate;
 
 public record Doctor : User
 {
