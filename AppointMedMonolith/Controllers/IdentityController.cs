@@ -24,7 +24,7 @@ public class IdentityController : Controller
             {
                 Errors = ModelState.Values.SelectMany(x => x.Errors.Select(y => y.ErrorMessage))
             });
-        var authResponse = await _identityService.RegisterAsync(request.Email, request.Password);
+        var authResponse = await _identityService.RegisterAsync(request.Email, request.Password, request.Role);
 
         if (!authResponse.Success)
             return BadRequest(new AuthFailedResponse

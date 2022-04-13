@@ -2,7 +2,7 @@
 
 public record Doctor : User
 {
-    public Guid ClinicId { get; set; }
-    public Guid DepartmentId { get; set; }
+    public string ClinicId { get; set; }
+    public string DepartmentId { get; set; }
 
 }

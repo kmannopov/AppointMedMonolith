@@ -32,7 +32,8 @@ public static class MapperExtensions
             City = request.City,
             District = request.District,
             Street = request.Street,
-            Location = new Point(request.Longitude, request.Latitude) { SRID = 4326 }
+            Latitude = request.Latitude,
+            Longitude = request.Longitude
         };
     }
 
@@ -46,11 +47,12 @@ public static class MapperExtensions
             City = request.City,
             District = request.District,
             Street = request.Street,
-            Location = new Point(request.Longitude, request.Latitude) { SRID = 4326 }
+            Latitude = request.Latitude,
+            Longitude = request.Longitude
         };
     }
 
-    public static List<Department> MapToDepartmentList(this List<DepartmentDto> departmentDtos)
+    public static List<Department> MapToDepartmentList(this List<CreateDepartmentDto> departmentDtos)
     {
         var result = new List<Department>();
 
@@ -68,7 +70,7 @@ public static class MapperExtensions
         return result;
     }
 
-    public static Patient MapToNewPatient(this PatientDto request, HttpContext httpContext)
+    public static Patient MapToNewPatient(this CreatePatientDto request, HttpContext httpContext)
     {
         return new Patient()
         {
@@ -79,12 +81,27 @@ public static class MapperExtensions
             Gender = request.Gender,
             Address = request.Address.MapToNewAddress(),
             PhoneNumber = request.PhoneNumber,
-            Email = httpContext.User.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Email).Value,
+            Email = httpContext.User.Claims.Single(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value,
             DateRegistered = DateTimeOffset.UtcNow
         };
     }
 
-    public static Patient MapToExistingPatient(this Patient currentPatient, PatientDto request)
+    public static Doctor MapToNewDoctor(this CreateDoctorDto request, HttpContext httpContext)
+    {
+        return new Doctor()
+        {
+            UserId = httpContext.GetUserId(),
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            DateOfBirth = request.DateOfBirth,
+            Gender = request.Gender,
+            PhoneNumber = request.PhoneNumber,
+            Email = httpContext.User.Claims.Single(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value,
+            DateRegistered = DateTimeOffset.UtcNow
+        };
+    }
+
+    public static Patient MapToExistingPatient(this Patient currentPatient, CreatePatientDto request)
     {
         return new Patient()
         {
@@ -95,22 +112,98 @@ public static class MapperExtensions
             Gender = request.Gender,
             Address = currentPatient.Address.MapToExistingAddress(request.Address),
             PhoneNumber = request.PhoneNumber,
-            Email = request.Email,
+            Email = currentPatient.Email,
             DateRegistered = currentPatient.DateRegistered
         };
     }
 
-    public static PatientResponse MapToPatientResponse(this Patient patient)
+    public static Doctor MapToExistingDoctor(this Doctor currentDoctor, CreateDoctorDto request)
     {
-        return new PatientResponse
+        return new Doctor()
+        {
+            UserId = currentDoctor.UserId,
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            DateOfBirth = request.DateOfBirth,
+            Gender = request.Gender,
+            PhoneNumber = request.PhoneNumber,
+            Email = currentDoctor.Email,
+            DateRegistered = currentDoctor.DateRegistered
+        };
+    }
+
+    public static PatientDto MapToPatientDto(this Patient patient)
+    {
+        return new PatientDto
         {
             FirstName = patient.FirstName,
             LastName = patient.LastName,
             DateOfBirth = patient.DateOfBirth,
             Gender = patient.Gender,
-            Address = patient.Address,
+            Address = patient.Address.MapToAddressDto(),
             PhoneNumber = patient.PhoneNumber,
             Email = patient.Email
         };
+    }
+
+    public static DoctorDto MapToDoctorDto(this Doctor doctor)
+    {
+        return new DoctorDto
+        {
+            FirstName = doctor.FirstName,
+            LastName = doctor.LastName,
+            DateOfBirth = doctor.DateOfBirth,
+            Gender = doctor.Gender,
+            PhoneNumber = doctor.PhoneNumber,
+            Email = doctor.Email,
+            ClinicId = doctor.ClinicId,
+            DepartmentId = doctor.DepartmentId
+        };
+    }
+
+    public static AddressDto MapToAddressDto(this Address address)
+    {
+        return new AddressDto
+        {
+            Region = address.Region,
+            City = address.City,
+            District = address.District,
+            Street = address.Street,
+            Latitude = address.Latitude,
+            Longitude = address.Longitude,
+        };
+    }
+
+    public static List<ClinicDto> MapToClinicDto(this List<Clinic> clinics)
+    {
+        var clinicDtos = new List<ClinicDto>();
+
+        foreach (var clinic in clinics)
+        {
+            clinicDtos.Add(new ClinicDto
+            {
+                Id = clinic.Id,
+                Name = clinic.Name,
+                Address = clinic.Address.MapToAddressDto(),
+                Departments = clinic.Departments.MapToDepartmentDto()
+            });
+        }
+
+        return clinicDtos;
+    }
+
+    public static List<DepartmentDto> MapToDepartmentDto(this List<Department> departments)
+    {
+        var departmentDtos = new List<DepartmentDto>();
+        foreach (var department in departments)
+        {
+            departmentDtos.Add(new DepartmentDto
+            {
+                Id = department.Id,
+                Name = department.Name
+            });
+        }
+
+        return departmentDtos;
     }
 }

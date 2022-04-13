@@ -25,6 +25,8 @@ public class DataContext : IdentityDbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Doctor>().Property(m => m.ClinicId).IsRequired(false);
+        modelBuilder.Entity<Doctor>().Property(m => m.DepartmentId).IsRequired(false);
         base.OnModelCreating(modelBuilder);
     }
 }

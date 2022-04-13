@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace AppointMed.Core.Dtos;
 
-public record DepartmentDto
+public record UpdateDoctorWorkplaceDto
 {
-    public Guid Id { get; init; }
-    public string Name { get; init; }
+    public Guid ClinicId { get; set; }
+    public Guid DepartmentId { get; set; }
 }

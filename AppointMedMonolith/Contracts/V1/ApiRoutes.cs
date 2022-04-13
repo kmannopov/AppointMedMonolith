@@ -13,6 +13,7 @@ public static class ApiRoutes
         public const string Create = $"{Base}/clinics";
         public const string Update = $"{Base}/clinics/{{clinicId}}";
         public const string Delete = $"{Base}/clinics/{{clinicId}}";
+        public const string GetByDept = $"{Base}/clinics/dept/{{deptName}}";
     }
 
     public static class Patients
@@ -22,13 +23,22 @@ public static class ApiRoutes
         public const string Update = $"{Base}/patients";
     }
 
+    public static class Doctors
+    {
+        public const string Get = $"{Base}/doctors/{{doctorId}}";
+        public const string Create = $"{Base}/doctors";
+        public const string Update = $"{Base}/doctors";
+        public const string UpdateWorkplace = $"{Base}/doctors/{{doctorId}}";
+        public const string GetByDept = $"{Base}/doctors/dept/{{deptId}}";
+    }
+
     public static class Appointments
     {
-        public const string GetAll = $"{Base}/appointments";
+        public const string GetAllForUser = $"{Base}/appointments/user/{{userId}}";
+        public const string GetSlots = $"{Base}/appointments/times/{{doctorId}}";
         public const string Get = $"{Base}/appointments/{{appointmentId}}";
         public const string Create = $"{Base}/appointments";
         public const string Update = $"{Base}/appointments/{{appointmentId}}";
-        public const string Delete = $"{Base}/appointments/{{appointmentId}}";
     }
     public static class Identity
     {

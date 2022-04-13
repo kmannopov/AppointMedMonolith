@@ -4,10 +4,10 @@ namespace AppointMed.Core.Interfaces
 {
     public interface IDoctorService
     {
-        Task<Doctor> GetDoctorByIdAsync(Guid id);
-        Task<IEnumerable<Doctor>> GetAllDoctorsByDeptInClinicAsync(Guid clinicId, Guid departmentId);
+        Task<Doctor> GetDoctorByIdAsync(string userId);
+        Task<IEnumerable<Doctor>> GetAllDoctorsByDeptInClinicAsync(string departmentId);
         Task<bool> CreateDoctorAsync(Doctor doctor);
         Task<bool> UpdateDoctorAsync(Doctor doctor);
-        Task<bool> UserIsDoctorAsync(Guid userId);
+        Task<bool> UserIsDoctorAsync(string userId);
     }
 }

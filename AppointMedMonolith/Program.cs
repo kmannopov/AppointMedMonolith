@@ -1,5 +1,6 @@
 using AppointMed.API.Installers;
 using AppointMed.Infrastructure.Settings;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,12 @@ if (app.Environment.IsDevelopment())
     {
         options.SwaggerEndpoint(swaggerOptions.UIEndpoint, swaggerOptions.Description);
     });
+}
+
+//Create Identity Roles
+using (var serviceScope = app.Services.CreateScope())
+{
+    await serviceScope.CreateIdentityRoles();
 }
 
 app.UseHttpsRedirection();

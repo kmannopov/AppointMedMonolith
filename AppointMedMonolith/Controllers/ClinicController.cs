@@ -10,8 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AppointMed.API.Controllers;
 
 [ApiController]
-[Route("[controller]")]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+//[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Patient")]
 public class ClinicController : ControllerBase
 {
     private readonly IClinicService _clinicService;
@@ -27,6 +26,18 @@ public class ClinicController : ControllerBase
         return Ok(await _clinicService.GetClinicsAsync());
     }
 
+    [HttpGet(ApiRoutes.Clinics.GetByDept)]
+    public async Task<IActionResult> GetByDepartmentName([FromRoute] string deptName)
+    {
+        var clinics = await _clinicService.GetClinicsByDepartmentAsync(deptName);
+        if (clinics == null)
+            return NotFound();
+
+        var result = clinics.ToList().MapToClinicDto();
+
+        return Ok(result);
+    }
+
     [HttpGet(ApiRoutes.Clinics.Get)]
     public async Task<IActionResult> Get([FromRoute] Guid clinicId)
     {
@@ -39,7 +50,7 @@ public class ClinicController : ControllerBase
     }
 
     [HttpPost(ApiRoutes.Clinics.Create)]
-    public async Task<IActionResult> Create([FromBody] ClinicDto request)
+    public async Task<IActionResult> Create([FromBody] CreateClinicDto request)
     {
         var clinic = new Clinic
         {
@@ -59,7 +70,7 @@ public class ClinicController : ControllerBase
     }
 
     [HttpPut(ApiRoutes.Clinics.Update)]
-    public async Task<IActionResult> Update([FromRoute] Guid clinicId, [FromBody] ClinicDto request)
+    public async Task<IActionResult> Update([FromRoute] Guid clinicId, [FromBody] CreateClinicDto request)
     {
         //TODO Check if this Method can be used to easily validate requests
         //if (!ModelState.IsValid)

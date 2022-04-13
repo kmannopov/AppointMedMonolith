@@ -4,11 +4,11 @@ namespace AppointMed.Infrastructure.Extensions;
 
 public static class IdentityExtensions
 {
-    public static Guid GetUserId(this HttpContext httpContext)
+    public static string GetUserId(this HttpContext httpContext)
     {
         if(httpContext.User == null)
-            return Guid.Empty;
+            return string.Empty;
 
-        return Guid.Parse(httpContext.User.Claims.Single(x => x.Type == "id").Value);
+        return httpContext.User.Claims.Single(x => x.Type == "id").Value;
     }
 }

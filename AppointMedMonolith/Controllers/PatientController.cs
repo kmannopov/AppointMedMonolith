@@ -10,8 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AppointMed.API.Controllers;
 
 [ApiController]
-[Route("[controller]")]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Patient")]
 
 public class PatientController : ControllerBase
 {
@@ -25,18 +24,19 @@ public class PatientController : ControllerBase
 
 
     [HttpGet(ApiRoutes.Patients.Get)]
-    public async Task<IActionResult> Get([FromRoute] Guid patientId)
+    [Authorize(Roles = "Patient,Doctor")]
+    public async Task<IActionResult> Get([FromRoute] string patientId)
     {
         var patient = await _patientService.GetPatientByIdAsync(patientId);
 
         if (patient is null)
             return NotFound();
 
-        return Ok(patient);
+        return Ok(patient.MapToPatientDto());
     }
 
     [HttpPost(ApiRoutes.Patients.Create)]
-    public async Task<IActionResult> Create([FromBody] PatientDto request)
+    public async Task<IActionResult> Create([FromBody] CreatePatientDto request)
     {
         var patientExists = await _patientService.GetPatientByIdAsync(HttpContext.GetUserId());
 
@@ -45,16 +45,19 @@ public class PatientController : ControllerBase
 
         var patient = request.MapToNewPatient(HttpContext);
 
-        await _patientService.CreatePatientAsync(patient);
+        var created = await _patientService.CreatePatientAsync(patient);
+
+        if (!created)
+            return BadRequest();
 
         var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
         var locationUri = baseUrl + "/" + ApiRoutes.Patients.Get.Replace("{patientId}", patient.UserId.ToString());
 
-        return Created(locationUri, patient.MapToPatientResponse());
+        return Created(locationUri, patient.MapToPatientDto());
     }
 
     [HttpPut(ApiRoutes.Patients.Update)]
-    public async Task<IActionResult> Update([FromBody] PatientDto request)
+    public async Task<IActionResult> Update([FromBody] CreatePatientDto request)
     {
         var id = HttpContext.GetUserId();
         var userIsPatient = await _patientService.UserIsPatientAsync(id);
@@ -64,13 +67,13 @@ public class PatientController : ControllerBase
 
         var patient = await _patientService.GetPatientByIdAsync(id);
 
-        patient.MapToExistingPatient(request);
+        var updatedPatient = patient.MapToExistingPatient(request);
         //TODO: Change IdentityUser Email as well
 
-        var updated = await _patientService.UpdatePatientAsync(patient);
+        var updated = await _patientService.UpdatePatientAsync(updatedPatient);
 
         if (updated)
-            return Ok(patient.MapToPatientResponse());
+            return Ok(updatedPatient.MapToPatientDto());
 
         return NotFound();
     }
