@@ -1,0 +1,20 @@
+
+{
+    "region" : "eu-central-1",
+    "configuration" : "Release",
+    "framework"     : "net6.0",
+    "self-contained" : false,
+    "application"    : "AppointMedAPI",
+    "environment"    : "AppointMedAPI-dev",
+    "enable-xray"    : false,
+    "enhanced-health-type" : "basic",
+    "additional-options"   : "",
+    "solution-stack"       : "64bit Amazon Linux 2 v2.3.0 running .NET Core",
+    "environment-type"     : "SingleInstance",
+    "cname"                : "appointmedapi",
+    "instance-type"        : "t2.micro",
+    "key-pair"             : "appointmedkeypair",
+    "instance-profile"     : "aws-elasticbeanstalk-ec2-role",
+    "service-role"         : "aws-elasticbeanstalk-service-role",
+    "proxy-server"         : "nginx"
+}

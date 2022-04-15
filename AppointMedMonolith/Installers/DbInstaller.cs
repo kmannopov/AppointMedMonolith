@@ -14,10 +14,12 @@ public class DbInstaller : IInstaller
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
         services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<DataContext>();
 
         services.AddScoped<IClinicService, ClinicService>();
-        services.AddScoped<IDepartmentService, DepartmentService>();
         services.AddScoped<IPatientService, PatientService>();
+        services.AddScoped<IDoctorService, DoctorService>();
+        services.AddScoped<IAppointmentService, AppointmentService>();
     }
 }

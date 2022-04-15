@@ -1,6 +1,4 @@
-﻿using System.Data.Entity.Spatial;
-
-namespace AppointMed.Core.Entities.AddressAggregate;
+﻿namespace AppointMed.Core.Entities;
 
 public record Address : BaseEntity
 {
@@ -8,5 +6,6 @@ public record Address : BaseEntity
     public string City { get; set; }
     public string District { get; set; }
     public string Street { get; set; }
-    public DbGeography Location { get; set; }
+    public double Latitude { get; set; }
+    public double Longitude { get; set; }
 }

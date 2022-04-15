@@ -1,7 +1,8 @@
 ﻿using AppointMed.API.Contracts.V1;
 using AppointMed.API.Contracts.V1.Requests;
 using AppointMed.API.Contracts.V1.Responses;
-using AppointMed.Infrastructure.Services.Auth;
+using AppointMed.API.Extensions;
+using AppointMed.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppointMed.API.Controllers;
@@ -23,7 +24,7 @@ public class IdentityController : Controller
             {
                 Errors = ModelState.Values.SelectMany(x => x.Errors.Select(y => y.ErrorMessage))
             });
-        var authResponse = await _identityService.RegisterAsync(request.Email, request.Password);
+        var authResponse = await _identityService.RegisterAsync(request.Email, request.Password, request.Role);
 
         if (!authResponse.Success)
             return BadRequest(new AuthFailedResponse
@@ -31,11 +32,7 @@ public class IdentityController : Controller
                 Errors = authResponse.Errors
             });
 
-        return Ok(new AuthSuccessResponse
-        {
-            Token = authResponse.Token,
-            RefreshToken = authResponse.RefreshToken
-        });
+        return Ok(authResponse.MapToAuthSuccessResponse());
     }
 
     [HttpPost(ApiRoutes.Identity.Login)]
@@ -49,11 +46,7 @@ public class IdentityController : Controller
                 Errors = authResponse.Errors
             });
 
-        return Ok(new AuthSuccessResponse
-        {
-            Token = authResponse.Token,
-            RefreshToken = authResponse.RefreshToken
-        });
+        return Ok(authResponse.MapToAuthSuccessResponse());
     }
 
     [HttpPost(ApiRoutes.Identity.Refresh)]
@@ -67,10 +60,6 @@ public class IdentityController : Controller
                 Errors = authResponse.Errors
             });
 
-        return Ok(new AuthSuccessResponse
-        {
-            Token = authResponse.Token,
-            RefreshToken = authResponse.RefreshToken
-        });
+        return Ok(authResponse.MapToAuthSuccessResponse());
     }
 }

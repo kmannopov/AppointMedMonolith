@@ -1,4 +1,5 @@
-﻿using AppointMed.Infrastructure.Services.Auth;
+﻿using AppointMed.Core.Interfaces;
+using AppointMed.Infrastructure.Services.Auth;
 using AppointMed.Infrastructure.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -14,6 +15,8 @@ public class MvcInstaller : IInstaller
         services.AddControllersWithViews(options =>
         {
             options.EnableEndpointRouting = false;
+        }).AddJsonOptions(options => {
+            options.JsonSerializerOptions.Converters.Add(new NetTopologySuite.IO.Converters.GeoJsonConverterFactory());
         });
 
         this.InstallSecurity(services, configuration);
