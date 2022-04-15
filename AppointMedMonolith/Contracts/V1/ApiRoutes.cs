@@ -34,7 +34,8 @@ public static class ApiRoutes
 
     public static class Appointments
     {
-        public const string GetAllForUser = $"{Base}/appointments/user/{{userId}}";
+        public const string GetAllForPatient = $"{Base}/appointments/patient/{{userId}}";
+        public const string GetAllForDoctor = $"{Base}/appointments/doctor/{{userId}}";
         public const string GetSlots = $"{Base}/appointments/times/{{doctorId}}";
         public const string Get = $"{Base}/appointments/{{appointmentId}}";
         public const string Create = $"{Base}/appointments";

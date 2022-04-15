@@ -27,8 +27,8 @@ public class AppointmentController : ControllerBase
 
     }
 
-    [HttpGet(ApiRoutes.Appointments.GetAllForUser)]
-    public async Task<IActionResult> GetAll([FromRoute] Guid userId)
+    [HttpGet(ApiRoutes.Appointments.GetAllForPatient)]
+    public async Task<IActionResult> GetAllForPatient([FromRoute] Guid userId)
     {
         var realId = HttpContext.GetUserId();
         var userIsPatient = userId.ToString() == realId;
@@ -37,6 +37,18 @@ public class AppointmentController : ControllerBase
             return BadRequest(new { error = "You do not have access to this user's appointments." });
 
         return Ok(await _appointmentService.GetPatientAppointmentList(userId));
+    }
+
+    [HttpGet(ApiRoutes.Appointments.GetAllForDoctor)]
+    public async Task<IActionResult> GetAllForDoctor([FromRoute] Guid userId)
+    {
+        var realId = HttpContext.GetUserId();
+        var userIsDoctor = userId.ToString() == realId;
+
+        if (!userIsDoctor)
+            return BadRequest(new { error = "You do not have access to this user's appointments." });
+
+        return Ok(await _appointmentService.GetDoctorAppointmentList(userId));
     }
 
     [HttpGet(ApiRoutes.Appointments.GetSlots)]
