@@ -18,13 +18,14 @@ public class AppointmentController : ControllerBase
     private readonly IAppointmentService _appointmentService;
     private readonly IDoctorService _doctorService;
     private readonly IClinicService _clinicService;
+    private readonly IPatientService _patientService;
 
-    public AppointmentController(IAppointmentService appointmentService, IDoctorService doctorService, IClinicService clinicService)
+    public AppointmentController(IAppointmentService appointmentService, IDoctorService doctorService, IClinicService clinicService, IPatientService patientService)
     {
         _appointmentService = appointmentService;
         _doctorService = doctorService;
         _clinicService = clinicService;
-
+        _patientService = patientService;
     }
 
     [HttpGet(ApiRoutes.Appointments.GetAllForPatient)]
@@ -68,12 +69,14 @@ public class AppointmentController : ControllerBase
 
         var doctor = await _doctorService.GetDoctorByIdAsync(request.DoctorId.ToString());
         var clinic = await _clinicService.GetClinicByIdAsync(Guid.Parse(doctor.ClinicId));
+        var patient = await _patientService.GetPatientByIdAsync(request.PatientId.ToString());
 
         var appointment = new Appointment
         {
             CreatedDate = DateTimeOffset.UtcNow,
             Id = Guid.NewGuid(),
             PatientId = request.PatientId,
+            PatientName = $"{patient.FirstName} {patient.LastName}",
             ClinicId = clinic.Id,
             ClinicName = clinic.Name,
             DateTime = request.DateTime,
