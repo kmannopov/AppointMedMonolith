@@ -1,3 +1,7 @@
+# 6BUIS007C-n - Business Information Systems Project
+
+The following is a report written as part of my final year project. A pdf version can be found in the repository, which I would highly recommend over the markdown version below.
+
 ![image](https://user-images.githubusercontent.com/79659647/175183140-42942792-436f-4ecb-bbdf-68170cf203ab.png)
 
 **A project undertaken as part of the BSc (Hons) Business Information
